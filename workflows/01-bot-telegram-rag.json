@@ -1,0 +1,78 @@
+{
+  "name": "Bot Telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "d6d88a6a-03cd-47ae-9880-9455eea7af7e",
+      "name": "Telegram Trigger",
+      "webhookId": "95702a4a-fd51-486f-9b36-dc9ec4b2040b",
+      "credentials": {
+        "telegramApi": {
+          "id": "N7UXeOfFmSJWf3hg",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Olá! Meu primeiro workflow está funcionando",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        0
+      ],
+      "id": "575b8229-987f-4967-9e17-5f76ceb6a375",
+      "name": "Send a text message",
+      "webhookId": "b181c5b8-8c56-458d-9f52-e4bbd96f8c44",
+      "credentials": {
+        "telegramApi": {
+          "id": "N7UXeOfFmSJWf3hg",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b42d21e1-317f-46b4-8b90-961e9a2a6c87",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "969893b8d2c1de10e6325e5d07baf7ce97922b7464992dce5c1e6122fb86d528"
+  },
+  "nodeGroups": [],
+  "id": "0a2kLn5carj2gkCt",
+  "tags": []
+}
