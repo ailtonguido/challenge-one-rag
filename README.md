@@ -294,11 +294,6 @@ Resposta gerada pelo Gemini
         ↓
 Resposta enviada ao Telegram
 ```
-## 📸 Evidências de funcionamento
-
-### 1. Ingestão dos documentos
-
-Execução do workflow responsável pela leitura dos PDFs, geração dos embeddings e armazenamento dos vetores no PostgreSQL com pgvector.
 
 
 O projeto demonstra na prática conceitos de **IA Generativa, RAG, embeddings, banco vetorial, automação, APIs, containers e Cloud Computing**.
