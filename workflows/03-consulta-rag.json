@@ -3,29 +3,6 @@
   "nodes": [
     {
       "parameters": {
-        "updates": [
-          "message"
-        ],
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegramTrigger",
-      "typeVersion": 1.5,
-      "position": [
-        0,
-        0
-      ],
-      "id": "e81efb36-2627-4bcd-9b4d-f8fa4b472e93",
-      "name": "Telegram Trigger",
-      "webhookId": "847e0831-21a6-4d60-b2ee-cd3414ebe108",
-      "credentials": {
-        "telegramApi": {
-          "id": "N7UXeOfFmSJWf3hg",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "={{ $json.message.text }}",
         "options": {
@@ -38,7 +15,7 @@
         224,
         0
       ],
-      "id": "11b14064-849f-405a-8cf2-15f96304e7d7",
+      "id": "49e38593-77ae-48a4-b6f0-0954e78da0c2",
       "name": "AI Agent"
     },
     {
@@ -52,11 +29,11 @@
         96,
         208
       ],
-      "id": "36fb4057-3120-42bf-b196-ee93410ad03a",
+      "id": "0971c1dc-e299-440f-b4ed-11fb2209e0db",
       "name": "Google Gemini Chat Model",
       "credentials": {
         "googlePalmApi": {
-          "id": "BWE96GoJRg4gZrUY",
+          "id": "Cluz3rWAEqvV2G8B",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -73,11 +50,11 @@
         528,
         208
       ],
-      "id": "6fdf8974-4921-45be-b6b8-9d136117ed9c",
+      "id": "61fa90d6-ee02-4533-9c07-0007206b7d2c",
       "name": "Postgres PGVector Store",
       "credentials": {
         "postgres": {
-          "id": "qPSHGIDcNYDQr9u1",
+          "id": "Z0M46MUolTTVx2fP",
           "name": "Postgres account"
         }
       }
@@ -90,11 +67,11 @@
         528,
         432
       ],
-      "id": "f8601fcb-2ddf-4ce7-9a34-45f9c7f08a5a",
+      "id": "75a0bca6-0ee3-46b4-98da-102e6cb94098",
       "name": "Embeddings Google Gemini",
       "credentials": {
         "googlePalmApi": {
-          "id": "BWE96GoJRg4gZrUY",
+          "id": "Cluz3rWAEqvV2G8B",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -113,12 +90,35 @@
         592,
         0
       ],
-      "id": "a97e71ee-03bf-4380-9bad-c5350c383905",
+      "id": "768bbc08-9c25-4ba0-82c3-98428bea4ef0",
       "name": "Send a text message",
       "webhookId": "29f42ef4-9eee-4138-be57-47257e47b176",
       "credentials": {
         "telegramApi": {
-          "id": "N7UXeOfFmSJWf3hg",
+          "id": "L7RQLbtnxg74KJnp",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        64,
+        0
+      ],
+      "id": "6418243e-0e86-41d5-988b-c6c2b33ccc1e",
+      "name": "Telegram Trigger",
+      "webhookId": "040648c0-a91d-4248-818e-14c9d812400d",
+      "credentials": {
+        "telegramApi": {
+          "id": "L7RQLbtnxg74KJnp",
           "name": "Telegram account"
         }
       }
@@ -126,17 +126,6 @@
   ],
   "pinData": {},
   "connections": {
-    "Telegram Trigger": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
         [
@@ -180,6 +169,17 @@
           }
         ]
       ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -188,12 +188,12 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "0b40b1c5-a0e3-40d5-8ce4-c47b71b1bff1",
+  "versionId": "8640af61-75ff-40b7-8d38-93e104b4e30e",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "969893b8d2c1de10e6325e5d07baf7ce97922b7464992dce5c1e6122fb86d528"
+    "instanceId": "85f5286e5960a049ccb35f467374aa91cb250fd1f207b3ce2536dd50eb68bf36"
   },
   "nodeGroups": [],
-  "id": "AVx4ZGUuzpS9ZCWb",
+  "id": "QTz1XR44CnilLKQT",
   "tags": []
 }

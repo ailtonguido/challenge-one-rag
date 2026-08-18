@@ -1,15 +1,15 @@
 {
-  "name": "Ingestão de PDFs",
+  "name": "2-Ingestão de PDFs",
   "nodes": [
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -416,
+        0,
         0
       ],
-      "id": "0f6e092c-604c-41b4-8c09-530e22d5e424",
+      "id": "7aeb4665-b957-4b12-ba61-01ff9d34f8f0",
       "name": "When clicking ‘Execute workflow’"
     },
     {
@@ -20,10 +20,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        -144,
+        272,
         0
       ],
-      "id": "953ff98f-efcd-4b48-97f8-6b3dd5b2cf2e",
+      "id": "ffc39dc5-c214-4ac7-9f9a-8562e5b50e80",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -34,10 +34,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        80,
+        496,
         0
       ],
-      "id": "9610d8e8-d5a6-4f70-8b9b-b8ea2218abb0",
+      "id": "82471b7a-628d-472a-b554-88ab0dae93e3",
       "name": "Extract from File"
     },
     {
@@ -48,14 +48,14 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
       "typeVersion": 1.3,
       "position": [
-        304,
+        720,
         0
       ],
-      "id": "fa1a1a61-41f1-4995-8489-d742352e7f24",
+      "id": "f4494c6b-1af7-4c0b-bc03-7385eb831c4b",
       "name": "Postgres PGVector Store",
       "credentials": {
         "postgres": {
-          "id": "qPSHGIDcNYDQr9u1",
+          "id": "Z0M46MUolTTVx2fP",
           "name": "Postgres account"
         }
       }
@@ -65,14 +65,14 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        272,
+        688,
         208
       ],
-      "id": "7b1227c1-827c-49aa-8652-24a6939c3c30",
+      "id": "058c9153-9f64-4aa3-9105-2ba211bc58cb",
       "name": "Embeddings Google Gemini",
       "credentials": {
         "googlePalmApi": {
-          "id": "BWE96GoJRg4gZrUY",
+          "id": "Cluz3rWAEqvV2G8B",
           "name": "Google Gemini(PaLM) Api account"
         }
       }
@@ -84,10 +84,10 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        448,
+        864,
         208
       ],
-      "id": "5f68edc2-f984-4fdf-bb3a-0493b83e6286",
+      "id": "84790b5c-0f3c-4a71-8b89-9775e7fdfd63",
       "name": "Default Data Loader"
     }
   ],
@@ -155,12 +155,12 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "6c3f7f41-ccdc-4a1b-a06d-b2f6b2ee3489",
+  "versionId": "8e9a799d-8dde-4ed1-afde-de69e4cfda36",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "969893b8d2c1de10e6325e5d07baf7ce97922b7464992dce5c1e6122fb86d528"
+    "instanceId": "85f5286e5960a049ccb35f467374aa91cb250fd1f207b3ce2536dd50eb68bf36"
   },
   "nodeGroups": [],
-  "id": "rv6P92uB1Bw70RU4",
+  "id": "OIS5usoXsBWfUoK1",
   "tags": []
 }
