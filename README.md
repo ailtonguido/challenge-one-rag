@@ -6,6 +6,10 @@ Projeto desenvolvido como parte da formação Oracle Next Education (ONE).
 
 Construir um agente de Inteligência Artificial utilizando arquitetura RAG (Retrieval-Augmented Generation), capaz de responder perguntas com base em documentos PDF fornecidos pelo usuário.
 
+## Arquitetura RAG
+
+Os PDFs são fragmentados em chunks, transformados em embeddings, armazenados no pgvector e recuperados semanticamente pelo agente antes da resposta do Gemini.
+
 ## Tecnologias
 
 - n8n (Self-Hosted)
@@ -13,18 +17,18 @@ Construir um agente de Inteligência Artificial utilizando arquitetura RAG (Retr
 - Telegram Bot
 - Banco Vetorial
 - Embeddings
-- Oracle Cloud Infrastructure (OCI)
+- Amazon Web Services (AWS) — EC2 + PostgreSQL + pgvector, Google Gemini e Cloudflare Tunnel.
 - Git & GitHub
 
 ## Roadmap
 
-- [ ] Ambiente Docker
-- [ ] Chatbot Telegram
-- [ ] Ingestão de PDFs
-- [ ] Banco Vetorial
-- [ ] Implementação RAG
-- [ ] Deploy AWS
-- [ ] Documentação Final
+- [x] Ambiente Docker
+- [x] Chatbot Telegram
+- [x] Ingestão de PDFs
+- [x] Banco Vetorial
+- [x] Implementação RAG
+- [x] Deploy AWS
+- [x] Documentação Final
 
 ## 🌐 Deploy e acesso público
 
@@ -56,7 +60,7 @@ Por esse motivo, a URL gerada pelo túnel **não é armazenada neste repositóri
 
 Exemplo:
 
-WEBHOOK_URL=https://<url-temporaria>.trycloudflare.com
+WEBHOOK_URL=https://.trycloudflare.com
 
 Após a alteração, o container do n8n deve ser recriado para carregar a nova configuração:
 
