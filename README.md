@@ -1,81 +1,270 @@
 # Challenge ONE RAG
 
-Projeto desenvolvido como parte da formação Oracle Next Education (ONE).
+Projeto desenvolvido como parte da formação **Oracle Next Education (ONE)**.
 
-## Objetivo
+## 🎯 Objetivo
 
-Construir um agente de Inteligência Artificial utilizando arquitetura RAG (Retrieval-Augmented Generation), capaz de responder perguntas com base em documentos PDF fornecidos pelo usuário.
+Construir um agente de Inteligência Artificial utilizando arquitetura **RAG (Retrieval-Augmented Generation)**, capaz de responder perguntas com base em documentos PDF fornecidos como base de conhecimento.
 
-## Arquitetura RAG
+A solução utiliza um bot no **Telegram** como interface de interação, permitindo que o usuário envie perguntas em linguagem natural e receba respostas contextualizadas a partir dos documentos processados pelo sistema.
 
-Os PDFs são fragmentados em chunks, transformados em embeddings, armazenados no pgvector e recuperados semanticamente pelo agente antes da resposta do Gemini.
+## 🧠 Arquitetura RAG
 
-## Tecnologias
+O projeto utiliza a arquitetura **Retrieval-Augmented Generation (RAG)** para combinar recuperação de informações com modelos generativos de IA.
 
-- n8n (Self-Hosted)
-- Docker
-- Telegram Bot
-- Banco Vetorial
-- Embeddings
-- Amazon Web Services (AWS) — EC2 + PostgreSQL + pgvector, Google Gemini e Cloudflare Tunnel.
-- Git & GitHub
+O processo ocorre em duas etapas principais:
 
-## Roadmap
+### 1. Ingestão dos documentos
 
-- [x] Ambiente Docker
-- [x] Chatbot Telegram
-- [x] Ingestão de PDFs
-- [x] Banco Vetorial
-- [x] Implementação RAG
-- [x] Deploy AWS
-- [x] Documentação Final
+Os arquivos PDF são:
 
-## 🌐 Deploy e acesso público
+1. carregados pelo n8n;
+2. extraídos e convertidos em texto;
+3. fragmentados em **chunks**;
+4. transformados em **embeddings** utilizando Google Gemini;
+5. armazenados no **PostgreSQL com pgvector**.
 
-A aplicação foi implantada em uma instância **Amazon EC2 (AWS)** utilizando **Docker Compose**, responsável pela execução dos containers do **n8n** e **PostgreSQL com pgvector**.
+### 2. Consulta RAG
 
-Para permitir que o **Telegram** acesse o webhook do n8n através de uma URL HTTPS pública, foi utilizado o **Cloudflare Tunnel**.
+Quando uma pergunta é enviada pelo Telegram:
 
-Nesta versão do projeto, está sendo utilizado um **Cloudflare Quick Tunnel**, que gera uma URL HTTPS temporária no domínio `trycloudflare.com` e encaminha as requisições para o n8n executado na porta `5678` da instância EC2.
+1. o Telegram envia a mensagem para o webhook do n8n;
+2. o AI Agent recebe a pergunta;
+3. a pergunta é transformada em embedding;
+4. o PGVector realiza uma busca semântica na base vetorial;
+5. os trechos mais relevantes dos documentos são recuperados;
+6. o Google Gemini utiliza esse contexto para gerar a resposta;
+7. o n8n envia a resposta de volta ao usuário pelo Telegram.
 
-Fluxo de acesso:
+## 🏗️ Arquitetura da solução
 
+```text
+                    Usuário
+                       │
+                       ▼
+                 Telegram Bot
+                       │
+                       │ HTTPS / Webhook
+                       ▼
+             Cloudflare Quick Tunnel
+                       │
+                       ▼
+                Amazon EC2 (AWS)
+                       │
+                Docker Compose
+                 ┌─────┴─────┐
+                 │           │
+                 ▼           ▼
+                n8n      PostgreSQL
+                 │        + pgvector
+                 │           ▲
+                 │           │
+                 ├── Embeddings ──► Google Gemini
+                 │
+                 └── AI Agent ────► Google Gemini
+                       │
+                       ▼
+                Resposta Telegram
+```
+
+## 🛠️ Tecnologias utilizadas
+
+- **n8n (Self-Hosted)** — automação e orquestração dos workflows
+- **Docker** — containerização da aplicação
+- **Docker Compose** — gerenciamento dos containers
+- **Amazon Web Services (AWS EC2)** — infraestrutura de nuvem
+- **PostgreSQL** — banco de dados
+- **pgvector** — armazenamento e busca vetorial
+- **Google Gemini** — LLM e geração de embeddings
+- **Telegram Bot API** — interface de comunicação com o usuário
+- **Cloudflare Tunnel** — exposição HTTPS do n8n
+- **Git & GitHub** — versionamento do projeto
+
+## 🔄 Workflows
+
+A solução foi organizada em workflows independentes.
+
+### 01 — Bot Telegram
+
+Workflow desenvolvido durante a primeira etapa do projeto para validar a integração entre **Telegram e n8n**.
+
+Foi utilizado como parte da evolução e dos testes da solução.
+
+### 02 — Ingestão de PDFs
+
+Responsável pela construção da base de conhecimento do RAG.
+
+```text
+PDFs
+  ↓
+Extração de texto
+  ↓
+Divisão em chunks
+  ↓
+Gemini Embeddings
+  ↓
+PostgreSQL + pgvector
+```
+
+Os documentos de teste são processados e armazenados como vetores para permitir posteriormente a busca semântica.
+
+### 03 — Consulta RAG
+
+Workflow principal da solução.
+
+```text
+Telegram Trigger
+       ↓
+    AI Agent
+    ↙     ↘
+Gemini   PGVector
+            ↓
+        Embeddings
+       ↓
+Telegram Response
+```
+
+O agente consulta a base vetorial para recuperar informações relevantes antes de gerar a resposta ao usuário.
+
+## 📄 Documentos de teste
+
+Para validar a solução foram utilizados documentos fictícios contendo informações corporativas, como:
+
+- política de home office;
+- política de férias;
+- benefícios;
+- política de segurança da informação.
+
+Esses documentos são utilizados exclusivamente para demonstração e testes da arquitetura RAG.
+
+## ☁️ Deploy na AWS
+
+A aplicação foi implantada em uma instância **Amazon EC2 (AWS)**.
+
+Os serviços são executados utilizando **Docker Compose**:
+
+```text
+Amazon EC2
+    │
+    └── Docker Compose
+          ├── n8n
+          └── PostgreSQL + pgvector
+```
+
+Os dados do n8n e do PostgreSQL utilizam **volumes Docker persistentes**, permitindo preservar configurações e dados mesmo após a recriação dos containers.
+
+## 🌐 Acesso público e Cloudflare Tunnel
+
+Para permitir que o **Telegram** acesse o webhook do n8n através de HTTPS, foi utilizado o **Cloudflare Tunnel**.
+
+Nesta versão do projeto é utilizado um **Cloudflare Quick Tunnel**, que gera uma URL HTTPS temporária no domínio:
+
+```text
+trycloudflare.com
+```
+
+O túnel encaminha as requisições HTTPS recebidas da internet para o n8n executado na porta `5678` da instância EC2.
+
+```text
 Telegram
     ↓
 Cloudflare Quick Tunnel (HTTPS)
     ↓
-AWS EC2
+Amazon EC2
     ↓
-Docker Compose
-    ├── n8n
-    └── PostgreSQL + pgvector
-            ↓
-        Google Gemini
+n8n :5678
+```
 
-### ⚠️ Observação sobre o Cloudflare Tunnel
+### ⚠️ URL temporária
 
-O endereço fornecido pelo **Cloudflare Quick Tunnel é temporário** e pode ser alterado quando o túnel é reiniciado.
+O endereço fornecido pelo **Cloudflare Quick Tunnel é temporário** e pode mudar sempre que o túnel for reiniciado.
 
-Por esse motivo, a URL gerada pelo túnel **não é armazenada neste repositório**. Sempre que um novo túnel é criado, a variável `WEBHOOK_URL` deve ser atualizada localmente no arquivo `.env` da instância EC2.
+Por esse motivo, a URL gerada pelo túnel **não é armazenada neste repositório**.
+
+Sempre que um novo túnel é criado, a variável `WEBHOOK_URL` deve ser atualizada no arquivo `.env` da instância EC2.
 
 Exemplo:
 
-WEBHOOK_URL=https://.trycloudflare.com
+```env
+WEBHOOK_URL=https://<url-temporaria>.trycloudflare.com
+```
 
 Após a alteração, o container do n8n deve ser recriado para carregar a nova configuração:
 
+```bash
 docker compose up -d --force-recreate n8n
+```
 
-Para um ambiente de produção, a evolução recomendada é utilizar um **Cloudflare Tunnel permanente associado a um domínio próprio**, evitando a necessidade de atualização manual da URL do webhook.
+Para um ambiente de produção, uma evolução recomendada é utilizar um **Cloudflare Tunnel permanente associado a um domínio próprio**, eliminando a necessidade de atualização manual da URL do webhook.
 
 ## 🔐 Segurança
 
-Dados sensíveis não são versionados no repositório.
+Dados sensíveis **não são versionados no repositório**.
 
-O arquivo `.env` é ignorado pelo Git e concentra configurações específicas do ambiente, enquanto credenciais como:
+O arquivo `.env` é ignorado pelo Git e concentra configurações específicas do ambiente.
 
-- Token do Telegram Bot
-- API Key do Google Gemini
-- Credenciais do PostgreSQL
+Credenciais como:
+
+- Token do Telegram Bot;
+- API Key do Google Gemini;
+- usuário e senha do PostgreSQL;
 
 são configuradas diretamente no ambiente de execução e/ou no gerenciador de credenciais do n8n.
+
+Um arquivo `.env.example` pode ser utilizado para documentar as variáveis necessárias sem expor valores reais.
+
+## 📂 Estrutura do projeto
+
+```text
+challenge-one-rag/
+│
+├── documentos/
+│   ├── manual-beneficios.pdf
+│   ├── politica-ferias.pdf
+│   ├── politica-home-office.pdf
+│   └── politica-seguranca-informacao.pdf
+│
+├── workflows/
+│   ├── 01-bot-telegram-rag.json
+│   ├── 02-ingestao-pdfs-rag.json
+│   └── 03-consulta-rag.json
+│
+├── docker-compose.yml
+├── .env.example
+├── .gitignore
+└── README.md
+```
+
+## ✅ Roadmap
+
+- [x] Configuração do ambiente Docker
+- [x] Integração com Telegram
+- [x] Ingestão de documentos PDF
+- [x] Geração de embeddings
+- [x] Configuração do PostgreSQL + pgvector
+- [x] Implementação da arquitetura RAG
+- [x] Integração com Google Gemini
+- [x] Deploy na Amazon EC2
+- [x] Exposição HTTPS via Cloudflare Tunnel
+- [x] Teste ponta a ponta pelo Telegram
+- [x] Documentação final
+
+## 🚀 Resultado
+
+O projeto foi validado ponta a ponta em ambiente de nuvem.
+
+O usuário envia uma pergunta pelo **Telegram**, o agente executado no **n8n na AWS** consulta semanticamente os documentos armazenados no **PGVector**, utiliza o **Google Gemini** para gerar uma resposta contextualizada e retorna o resultado diretamente pelo Telegram.
+
+```text
+Pergunta no Telegram
+        ↓
+Recuperação semântica no RAG
+        ↓
+Contexto recuperado dos PDFs
+        ↓
+Resposta gerada pelo Gemini
+        ↓
+Resposta enviada ao Telegram
+```
+
+O projeto demonstra na prática conceitos de **IA Generativa, RAG, embeddings, banco vetorial, automação, APIs, containers e Cloud Computing**.
