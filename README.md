@@ -249,6 +249,34 @@ challenge-one-rag/
 - [x] Teste ponta a ponta pelo Telegram
 - [x] Documentação final
 
+## 📸 Evidências de funcionamento
+
+### 1. Ingestão dos documentos
+
+Execução do workflow responsável pela leitura dos arquivos PDF, extração do conteúdo, geração dos embeddings com Google Gemini e armazenamento dos vetores no PostgreSQL com pgvector.
+
+Nesta execução, os 4 documentos de teste foram processados com sucesso, resultando na geração e armazenamento dos chunks utilizados pela base de conhecimento do RAG.
+
+![Workflow de ingestão RAG](docs/workflow-ingestao.png)
+
+### 2. Consulta RAG
+
+Execução ponta a ponta do workflow principal da solução.
+
+A pergunta é recebida pelo Telegram, processada pelo AI Agent, que consulta semanticamente a base vetorial no PostgreSQL/pgvector e utiliza o Google Gemini para gerar a resposta com base no contexto recuperado.
+
+![Workflow de consulta RAG](docs/workflow-consulta-rag.png)
+
+### 3. Resultado no Telegram
+
+Exemplo de interação com o agente:
+
+**Pergunta:** Qual é a política de home office da empresa?
+
+O agente recuperou as informações presentes nos documentos da base de conhecimento e enviou automaticamente a resposta ao usuário pelo Telegram.
+
+![Resposta do agente RAG no Telegram](docs/telegram-rag.png)
+
 ## 🚀 Resultado
 
 O projeto foi validado ponta a ponta em ambiente de nuvem.
